@@ -1,0 +1,210 @@
+{% extends 'headerfooter.html' %}
+
+<!--Block content goes below-->
+
+  {% block content %}
+<script>
+var length_points={{len_point}};
+    window.onload = function () {
+  let t1="{{p_name}} Trends (Product Amount Vs Price)"
+  var chart = new CanvasJS.Chart("chartContainer", {
+      theme: "light2", // "light1", "light2", "dark1", "dark2"
+      animationEnabled: true,
+      zoomEnabled: true,
+      title: {
+          text: t1
+      },
+    axisX: {
+          title: "Number of products"
+        },
+    axisY: {
+          title: "Price",
+          titleFontFamily: "comic sans ms"
+        },
+      data: [{
+          type: "area",
+          dataPoints: []
+      }]
+  });
+
+  alladdDataPoints(length_points[0],length_points[1]);
+  chart.render();
+function alladdDataPoints(noOfDps,valuespoint) {
+      var xVal = chart.options.data[0].dataPoints.length + 1;
+      for(var i = 0; i < noOfDps; i++) {
+          yVal = valuespoint[i];
+          chart.options.data[0].dataPoints.push({x: xVal,y: yVal});
+          xVal=xVal+1;
+      }
+      }
+      let max_min_avg={{max_min_mean}}
+      document.getElementById("amount").innerHTML = length_points[0];
+      document.getElementById("max").innerHTML = max_min_avg[0];
+      document.getElementById("min").innerHTML = max_min_avg[1];
+      document.getElementById("avg").innerHTML = max_min_avg[2];
+
+
+let product_detail={{product_detail|safe}};
+let txt="";
+let size=length_points[0];
+let c=0;
+
+for (let x=0;x<size/3 && x<8;x++)
+{
+txt+='<div class="row">';
+
+  for (let y=0;y<3 && c<size;y++)
+  {
+    txt+='<div class="col s12 m4"> <div class="card"> <div class="card-image">'+
+          '<img src='+product_detail[2][c]+'> <span style="color:red; font-weight:bold" class="card-title">'+product_detail[0][c]+'</span>'+
+        '</div><div class="card-content">  <p>'+product_detail[1][c]+'</p></div>'+
+        '<div class="card-action">  <span href="#">Rs. '+product_detail[3][c]+'</span>'+
+        '</div></div></div>';
+    c=c+1;
+   }
+    txt+='</div>';
+}
+
+document.getElementById("d1").innerHTML = txt;
+
+
+
+  }
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="showcase container">
+      <div class="row">
+        <div class="col s12 m10 offset-m1 center">
+          <h5>Welcome To E-commerce Market Research Tool</h5>
+          <h1>{{p_web}} Product Trends</h1>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+
+  <section class="section section-stats center">
+    <div class="row">
+      <div class="col s12 m6 l3">
+        <div class="card-panel blue lighten-1 white-text center">
+          <i class="material-icons medium">view_quilt</i>
+          <h5>Total Products</h5>
+          <h3 class="count"><span id="amount"></span></h3>
+          <div class="progress grey lighten-1">
+            <div class="determinate white" style="width: 30%;"></div>
+          </div>
+        </div>
+      </div>
+      <div class="col s12 m6 l3">
+        <div class="card-panel center">
+          <i class="material-icons medium">trending_up monetization_on</i>
+          <h5>Maximum Price</h5>
+          <h3 class="count"><span id="max"></span></h3>
+          <div class="progress grey lighten-1">
+            <div class="determinate blue lighten-1" style="width: 60%;"></div>
+          </div>
+        </div>
+      </div>
+      <div class="col s12 m6 l3">
+        <div class="card-panel blue lighten-1 white-text center">
+          <i class="material-icons medium">trending_down monetization_on</i>
+          <h5>Minimum Price</h5>
+          <h3 class="count"><span id="min"></span></h3>
+          <div class="progress grey lighten-1">
+            <div class="determinate white" style="width: 30%;"></div>
+          </div>
+        </div>
+      </div>
+      <div class="col s12 m6 l3">
+        <div class="card-panel center">
+          <i class="material-icons medium">supervisor_account</i>
+          <h5>Average Price</h5>
+          <h3 class="count"><span id="avg"></span></h3>
+          <div class="progress grey lighten-1">
+            <div class="determinate blue lighten-1" style="width: 60%;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+<br>
+<br>
+
+  <div class="container">
+    <div id="chartContainer" style="height: 300px; width: 100%;"></div>
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+  </div>
+<br>
+
+
+<div id="d1"></div>
+
+
+
+  <script>
+    // Hide Sections
+    $('.section').hide();
+
+    setTimeout(function () {
+      $(document).ready(function () {
+        // Show sections
+        $('.section').fadeIn();
+
+        // Hide preloader
+        $('.loader').fadeOut();
+
+        //Init Side nav
+        $('.button-collapse').sideNav();
+
+        // Counter
+        $('.count').each(function () {
+          $(this).prop('Counter', 0).animate({
+            Counter: $(this).text()
+          }, {
+              duration: 1000,
+              easing: 'swing',
+              step: function (now) {
+                $(this).text(Math.ceil(now));
+              }
+            });
+        });
+
+        // Comments - Approve & Deny
+        $('.approve').click(function (e) {
+          Materialize.toast('Comment Approved', 3000);
+          e.preventDefault();
+        });
+        $('.deny').click(function (e) {
+          Materialize.toast('Comment Denied', 3000);
+          e.preventDefault();
+        });
+
+      });
+    }, 1000);
+
+
+
+</script>
+
+
+
+
+
+  {% endblock %}

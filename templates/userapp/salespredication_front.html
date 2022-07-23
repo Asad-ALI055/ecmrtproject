@@ -1,0 +1,48 @@
+{% extends 'userapp/dashboard_headerfooter.html' %}
+{% load static %}
+<!--Block content goes below-->
+  {% block content %}
+
+<div class="content bg">
+    <div class="container">
+        <div class = "row">
+     	    <div class="col s12">
+			    <h1 class="black-text">Sales Forecasting</h1>
+		    </div>
+        </div>
+        <div class="row">
+            <h4 class="blue-text center-align">Please Upload Dataset For Sale Forecasting</h4>
+            <br>
+            <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+                <div class = "file-field input-field">
+                    <div class = "btn">
+                        <span>Browse</span>
+                        <input type = "file" name="myfile" required/>
+                    </div>
+
+                    <div class = "file-path-wrapper">
+                       <input class = "file-path validate" type = "text" placeholder = "Upload file" required />
+                    </div>
+               </div>
+
+               <div class="center-align">
+                   <button class="btn green waves-effect waves-light" type="submit" name="action">Upload
+                   <i class="material-icons left">file_upload</i>
+                   </button>
+               </div>
+            </form>
+
+                <div class="center-align">
+                {% for message in messages %}
+                    <h3 style="color:red"> {{message}}   </h3>
+                {% endfor %}
+                </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+  {% endblock %}

@@ -1,0 +1,88 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Administrator</title>
+	<!--Import Google Icon Font-->
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<!--Import materialize.css-->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+	<script src="https://code.jquery.com/jquery-3.1.0.js"></script>
+	<!--Let browser know website is optimized for mobile-->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+</head>
+<style type="text/css">
+	.bg {
+		color: Tomato;
+	}
+
+	nav {
+		padding-left: 300px;
+	}
+
+	.content {
+		padding-left: 300px;
+		height: 100%;
+	}
+
+	.card-bg {
+		background: rgba(0, 0, 0, 0);
+	}
+
+	@media only screen and (max-width: 992px) {
+
+		.content,
+		nav {
+			padding-left: 0;
+		}
+	}
+</style>
+<script type="text/javascript">
+	$(document).ready(function () {
+		$('.sidenav').sidenav();
+	});
+</script>
+
+<body>
+	<div class="navbar-fixed">
+		<nav>
+			<div class="nav-wrapper">
+				<a href="/" class="brand-logo center">ECMRT</a>
+				<a href="" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+			</div>
+		</nav>
+	</div>
+	<ul class="sidenav sidenav-fixed bg" id="slide-out">
+		<li>
+			<div class="user-view">
+
+				<a href="#"><img src="/static/icon/man.png" class="circle"></a>
+				<a href="#" class="black-text name">Ali Qadeer</a>
+				<a href="#" class="black-text email">aliqadeer@gmail.com</a>
+			</div>
+		</li>
+		<li><a href="{% url 'dashboard' %}" class="black-text"><i class="material-icons">home</i>Dashboard</a></li>
+		<li><a href="{% url 'sales-predication' %}" class="black-text"><i class="material-icons">explore</i>Sales
+				Predication</a></li>
+		<li><a href="{% url 'platform-recommendation' %}" class="black-text"><i
+					class="material-icons">timeline</i>Platform Recommendation</a></li>
+		<li><a href="{% url 'sales-analysis' %}" class="black-text"><i class="material-icons">analytics</i>Sales
+				Analysis</a></li>
+		<li><a href="{% url 'seo-keyword' %}" class="black-text"><i class="material-icons">screen_search_desktop</i>SEO
+				Keyword Search</a></li>
+		<li><a href="{% url 'daraz-analysis' %}" class="black-text"><i class="material-icons">assessment</i>Daraz Flash
+				Sale Analysis</a></li>
+	</ul>
+
+
+
+	{% block content %}
+
+	{% endblock %}
+</body>
+
+</html>

@@ -1,0 +1,141 @@
+{% extends 'userapp/dashboard_headerfooter.html' %}
+{% load static %}
+<!--Block content goes below-->
+
+
+  {% block content %}
+  <script type="text/javascript">
+  window.onload = function () {
+    var chart = new CanvasJS.Chart("chartContainer",
+    {
+     title:{
+      text: "Distribution of Sales"
+    },
+
+    data: [
+    {
+     type: "scatter",
+     dataPoints: []
+   }
+   ]
+ });
+addDataPoints({{dict_predict.orignal_x}},{{dict_predict.orignal_y}});
+chart.render();
+
+
+var chart = new CanvasJS.Chart("chartContainer1",
+    {
+     title:{
+      text: "Linear Regression Model Line"
+    },
+
+    data: [
+    {
+     type: "scatter",
+     dataPoints: []
+   },
+       {
+     type: "line",
+     dataPoints: []
+   }
+
+   ]
+ });
+twoaddDataPoints({{dict_predict.x_train}},{{dict_predict.y_train}},{{dict_predict.x_train}},{{dict_predict.predict_values}});
+chart.render();
+
+
+
+
+
+function addDataPoints(xvalues,yvalues) {
+      var xVal = xvalues;
+      var yVal = yvalues;
+      for(var i = 0; i < xVal.length; i++) {
+          chart.options.data[0].dataPoints.push({x:xVal[i],y: yVal[i]});
+      }
+    }
+
+function twoaddDataPoints(xvalues,yvalues,x1,y1) {
+      var xVal = xvalues;
+      var yVal = yvalues;
+      var x1=x1;
+      var y1=y1;
+      for(var i = 0; i < xVal.length; i++) {
+          chart.options.data[0].dataPoints.push({x:xVal[i],y: yVal[i]});
+          chart.options.data[1].dataPoints.push({x:x1[i],y: y1[i]});
+      }
+    }
+
+
+
+}
+</script>
+
+
+
+<div class="content bg">
+    <div class="container">
+		<div class="row">
+			<div class="col s12">
+				<h1 class="black-text">Sales Forecasting</h1>
+			</div>
+		</div>
+	</div>
+	<br>
+	<div class="row">
+		<div class="col s12">
+				<h3 class="black-text">Distribution of Data</h3>
+		</div>
+
+		<div class="col s12 m12 l12">
+			<div id="chartContainer" style="height: 400px; width: 100%;">
+			<script type="text/javascript" src="{% static 'js/canvasjs.min.js' %}"></script>
+		</div>
+	</div>
+	<br>
+		<div class="col s12">
+			<h3 class="black-text">Linear Regression Line</h3>
+		</div>
+		<div class="row">
+		<div class="col s12 m12 l12">
+			<div id="chartContainer1" style="height: 400px; width: 100%;">
+			<script type="text/javascript" src="{% static 'js/canvasjs.min.js' %}"></script>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="container">
+	<div class="row">
+		<br>
+		<div class="col s6 m4 l4 black-text">
+			<h3>Predict Sales</h3>
+			<label for="insert">Enter Value for Predication</label>
+			<input id="insert" type="text">
+			<button class="btn green waves-effect waves-light" type="submit" onclick="myFunction()" style="btn green waves-effect waves-light">Predict</button>
+
+		</div>
+		<div class="col s6 m8 l8 center-align green-text" style="display:none" id="myDIV">
+			<h3>Predicated Value</h3>
+			<h3 id="demo"></h3>
+		</div>
+	</div>
+</div>
+
+</div>
+
+
+<script>
+function myFunction() {
+  var x = document.getElementById("myDIV");
+  var x_value = document.getElementById("insert");
+x.style.display = "block";
+    var txt=parseFloat({{dict_predict.intercept_value}})+parseFloat({{dict_predict.coef_value}})*parseFloat(x_value.value);
+    txt=txt.toFixed(1);
+    document.getElementById('demo').innerHTML =txt;
+
+}
+</script>
+
+
+  {% endblock %}

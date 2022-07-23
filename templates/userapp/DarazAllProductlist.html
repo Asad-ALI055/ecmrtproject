@@ -1,0 +1,74 @@
+{% extends 'userapp/dashboard_headerfooter.html' %}
+{% load static %}
+<!--Block content goes below-->
+
+
+  {% block content %}
+
+<script>
+	let d1={{daraz_dict.all_product_detail_date}};
+	let am1={{daraz_dict.all_product_detail_amount}};
+	let s1={{daraz_dict.all_product_detail_sales}};
+	txt='<table class="striped black-text"><tr><td>Date</td><td>Title</td><td>Sold Products</td><td>Sale(Rs)</td></tr>';
+
+for (int i=0;i<10;i++)
+{
+txt=txt+'<tr><td>22</td><td>67</td><td>77</td></tr>';
+}
+txt=txt+'</table>';
+document.getElementById("table1").innerHTML = txt;
+
+</script>
+
+
+<div class="content bg">
+    <div class="container">
+		<div class="row">
+			<div class="col s12">
+				<h3 class="black-text">Daraz Flash Sale All Product Details</h3>
+			</div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s12 m12 l12">
+            <span>Total Record :</span>
+            <span id="total_row" ></span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s12 m12 l12">
+            <div class="card">
+				<div id="demo" class="card-content">
+				</div>
+			</div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+
+
+let all_product_detail_sales={{daraz_dict.all_product_detail_sales}};
+let all_product_detail_title={{daraz_dict.all_product_detail_title|safe}};
+let all_product_detail_date={{daraz_dict.all_product_detail_date|safe}}
+let all_product_detail_amount={{daraz_dict.all_product_detail_amount}}
+
+let s1=all_product_detail_sales;
+let t1=all_product_detail_title;
+let d1=all_product_detail_date;
+let m1=all_product_detail_amount;
+
+var nrow=s1.length;
+var txt='<table class="striped black-text"><tr><th>Date</th><th>Product Title</th><th>Sold Products</th><th>Revenue</th></tr>';
+for(let i=0;i<s1.length;i++)
+{
+txt+='<tr><td>'+d1[i]+'</td><td>'+t1[i]+'</td><td>'+m1[i]+'</td><td>'+s1[i]+'</td></tr>';
+}
+txt=txt+'</table>';
+document.getElementById('demo').innerHTML =txt;
+document.getElementById('total_row').innerHTML =nrow;
+</script>
+
+  {% endblock %}

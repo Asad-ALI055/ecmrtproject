@@ -1,0 +1,83 @@
+{% extends 'userapp/dashboard_headerfooter.html' %} {% load static %}
+<!--Block content goes below-->
+
+{% block content %}
+
+<div class="content bg">
+  <div class="container">
+    <div class="row">
+      <div class="col s12">
+        <h1 class="black-text">SEO Keyword Search</h1>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <form
+      action="seo-keyword"
+      class="section section-search #ef5350 red lighten-1 white-text center"
+    >
+      {% csrf_token %}
+      <div class="container">
+        <div class="row">
+          <div class="col s12">
+            <h3>Search keywords</h3>
+            <div class="input-field">
+              <input
+                class="white grey-text autocomplete"
+                style="border-radius: 25px; padding: 2px; padding-left: 10px"
+                placeholder="Search Keyword..."
+                type="text"
+                name="seo_keyword"
+                id="autocomplete-input"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="row">
+    <div class="center-align">
+      {% for message in messages %}
+      <h3 style="color: red">{{message}}</h3>
+      {% endfor %}
+    </div>
+    <div class="col s12 m12 l12">
+      <span>Total Record :</span>
+      <span id="total_row"></span>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col s12 m12 l12">
+      <div class="card">
+        <div id="demo" class="card-content"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+
+
+  let all_product_detail_sales={{seo_dict.competition_index}};
+  let all_product_detail_title={{seo_dict.keyword|safe}};
+  let all_product_detail_rep={{seo_dict.avg_search}}
+  let all_product_detail_amount={{seo_dict.competition|safe}}
+
+  let s1=all_product_detail_sales;
+  let t1=all_product_detail_title;
+  let r1=all_product_detail_rep;
+  let m1=all_product_detail_amount;
+
+  var nrow=s1.length;
+  var txt='<table class="striped black-text"><tr><th>Keyword Name</th><th>Average Searches</th><th>Competition</th><th>Competition (Index)</th></tr>';
+  for(let i=0;i<s1.length;i++)
+  {
+  txt+='<tr><td>'+t1[i]+'</td><td>'+r1[i]+'</td><td>'+m1[i]+'</td><td>'+s1[i]+'</td></tr>';
+  }
+  txt=txt+'</table>';
+  document.getElementById('demo').innerHTML =txt;
+  document.getElementById('total_row').innerHTML =nrow;
+</script>
+
+{% endblock %}

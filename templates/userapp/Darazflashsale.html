@@ -1,0 +1,843 @@
+{% extends 'userapp/dashboard_headerfooter.html' %}
+{% load static %}
+<!--Block content goes below-->
+
+
+  {% block content %}
+<style media="screen">
+
+
+#box {
+    height: 25em;
+    padding: 1em;
+    margin: auto;
+    border: 0.062em solid #999;
+    background-color: #fff;
+    overflow: auto;
+    text-align: left;
+}
+</style>
+
+
+
+<script>
+window.onload = function () {
+
+
+<!--best time for sales-->
+
+var chart = new CanvasJS.Chart("Overallsale", {
+	animationEnabled: true,
+	theme: "light2",
+	title:{
+		text: "Daraz Daily Sale"
+	},
+	axisY: {
+		title: "Sales Revenue"
+	},
+	axisX: {
+		title: "Date"
+	},
+	data: [{
+		type: "line",
+      	indexLabelFontSize: 16,
+		dataPoints: []
+	}]
+});
+addDataPoints({{daraz_dict.s_date|safe}},{{daraz_dict.s_sale}});
+chart.render();
+
+
+<!--  Most & least sale date  -->
+var chart = new CanvasJS.Chart("chartContainer", {
+	animationEnabled: true,
+	theme: "light2", // "light1", "light2", "dark1", "dark2"
+	title: {
+		text: "Daraz Most & Least Sales Date"
+	},
+	subtitles: [{
+		text: "In PKR",
+		fontSize: 16
+	}],
+	axisY: {
+		prefix: "Rs"
+	},
+	data: [{
+		type: "column",
+		indexLabel: "{y}",
+        indexLabelPlacement: "outside",
+		dataPoints: []
+	}]
+});
+addDataPoints({{daraz_dict.graph_ml_sale_date|safe}},{{daraz_dict.graph_ml_sale_revenue}});
+chart.render();
+
+<!-- Most & least sold Products -->
+var chart = new CanvasJS.Chart("chartContainer1", {
+	animationEnabled: true,
+	theme: "light2", // "light1", "light2", "dark1", "dark2"
+	title: {
+		text: "Daraz Most & Least Sold Products"
+	},
+	subtitles: [{
+		text: "In Rupees",
+		fontSize: 16
+	}],
+	axisY: {
+		prefix: "Amount"
+	},
+	data: [{
+		type: "column",
+        indexLabel: "{y}",
+        indexLabelPlacement: "outside",
+		dataPoints: []
+	}]
+});
+addDataPoints({{daraz_dict.graph_ml_sold_name|safe}},{{daraz_dict.graph_ml_sold_amount}});
+chart.render();
+
+
+<!-- Top15 best sold Products-->
+var chart = new CanvasJS.Chart("chartContainer2", {
+	animationEnabled: true,
+	title: {
+		text: "Best Selling Products"
+	},
+	axisX: {
+		interval: 1
+	},
+	axisY: {
+		title: "Amount Sold",
+		includeZero: true,
+
+	},
+	data: [{
+		type: "bar",
+		dataPoints: []
+	}]
+});
+addDataPoints({{daraz_dict.top15_sold_product_name|safe}},{{daraz_dict.top15_sold_product_amount}});
+chart.render();
+
+
+
+<!-- Top15 best Revenue Collecting Products-->
+var chart = new CanvasJS.Chart("chartContainer3", {
+	animationEnabled: true,
+	title: {
+		text: "Best Revenue Getting Products"
+	},
+	axisX: {
+		interval: 1
+	},
+	axisY: {
+		title: "Amount Sold",
+		includeZero: true,
+
+	},
+	data: [{
+		type: "bar",
+		dataPoints: []
+	}]
+});
+addDataPoints({{daraz_dict.top15_sale_product_name|safe}},{{daraz_dict.top15_sale_product_amount}});
+chart.render();
+
+
+ var chart = new CanvasJS.Chart("Sold_vs_notsold", {
+      theme: "light2", // "light1", "light2", "dark1", "dark2"
+      animationEnabled: true,
+      zoomEnabled: true,
+      title: {
+          text: "Sold Vs Not Sold Products"
+      },
+    axisY: {
+          title: "Percentage",
+          titleFontFamily: "comic sans ms",
+          suffix: "%"
+        },
+      data: [{
+          type: "column",
+         indexLabel: "{y}'%'",
+         indexLabelPlacement: "outside",
+
+          dataPoints: []
+      }]
+  });
+
+  addDataPoints(['Not Sold Product','Sold Product'],[{{daraz_dict.sold_product_percent}},{{daraz_dict.notsold_product_percent}}]);
+  chart.render();
+
+
+<!-- Daraz Market Share -->
+var chart = new CanvasJS.Chart("marketshare", {
+	theme: "light2",
+	animationEnabled: true,
+	title: {
+		text: "Daraz Products Market Share"
+	},
+	data: [{
+		type: "pie",
+		indexLabelFontSize: 18,
+		radius: 80,
+		indexLabel: "{label} - {y}",
+		yValueFormatString: "###0.0\"%\"",
+		click: explodePie,
+		dataPoints: []
+	}]
+});
+addDataPoints({{daraz_dict.mrk_lable|safe}},{{daraz_dict.mrk_y}});
+chart.render();
+function explodePie(e) {
+	for(var i = 0; i < e.dataSeries.dataPoints.length; i++) {
+		if(i !== e.dataPointIndex)
+			e.dataSeries.dataPoints[i].exploded = false;
+	}
+}
+
+
+<!-- Top15 Most Repeating Products-->
+var chart = new CanvasJS.Chart("top15_repeat", {
+	animationEnabled: true,
+	title: {
+		text: "Top15 Most Repeating Products"
+	},
+	axisX: {
+		interval: 1
+	},
+	axisY: {
+		title: "Repetition",
+		includeZero: true,
+
+	},
+	data: [{
+		type: "bar",
+		dataPoints: []
+	}]
+});
+addDataPoints({{daraz_dict.top15_repeat_name|safe}},{{daraz_dict.top15_repeat_rep}});
+chart.render();
+
+
+<!-- Top 15 products Sold Vs repetition-->
+ var chart = new CanvasJS.Chart("top15_repeatsold", {
+      theme: "light2", // "light1", "light2", "dark1", "dark2"
+      animationEnabled: true,
+      zoomEnabled: true,
+      title: {
+          text: "Top 15 Repetition Vs Sold Products"
+      },
+    axisY: {
+          title: "Repetition",
+          titleFontFamily: "comic sans ms",
+        },
+      data: [{
+          type: "column",
+          dataPoints: []
+      }]
+  });
+
+  addDataPoints({{daraz_dict.top15_repeat_sold1}},{{daraz_dict.top15_repeat_rep1}});
+  chart.render();
+
+
+<!-- Top 15 products Sales Vs repetition-->
+ var chart = new CanvasJS.Chart("top15_repeatsales", {
+      theme: "light2", // "light1", "light2", "dark1", "dark2"
+      animationEnabled: true,
+      zoomEnabled: true,
+      title: {
+          text: "Top 15 Repetition Vs Sales"
+      },
+    axisY: {
+          title: "Repetition",
+          titleFontFamily: "comic sans ms",
+        },
+      data: [{
+          type: "column",
+          dataPoints: []
+      }]
+  });
+
+  addDataPoints({{daraz_dict.top15_repeat_sales2}},{{daraz_dict.top15_repeat_rep2}});
+  chart.render();
+
+<!--Sales Trends of Repeated Products-->
+var chart = new CanvasJS.Chart("sales_repeat_trend", {
+      theme: "light2", // "light1", "light2", "dark1", "dark2"
+      animationEnabled: true,
+      zoomEnabled: true,
+      title: {
+          text: "Sales Trends of Repeated Products"
+      },
+    axisX: {
+          title: "Number of products"
+        },
+    axisY: {
+          title: "Sales",
+          titleFontFamily: "comic sans ms"
+        },
+      data: [{
+          type: "area",
+          dataPoints: []
+      }]
+  });
+addDataPoints({{daraz_dict.rep_sale_trend_len}},{{daraz_dict.rep_sale_trend}});
+chart.render();
+
+<!--Sales Trends of Not Repeated Products-->
+var chart = new CanvasJS.Chart("sales_notrepeat_trend", {
+      theme: "light2", // "light1", "light2", "dark1", "dark2"
+      animationEnabled: true,
+      zoomEnabled: true,
+      title: {
+          text: "Sales Trends of Not Repeated Products"
+      },
+    axisX: {
+          title: "Number of products"
+        },
+    axisY: {
+          title: "Sales",
+          titleFontFamily: "comic sans ms"
+        },
+      data: [{
+          type: "area",
+          dataPoints: []
+      }]
+  });
+addDataPoints({{daraz_dict.not_rep_sale_trend_len}},{{daraz_dict.not_rep_sale_trend}});
+chart.render();
+
+
+<!--Sold Products Trends of Repeated Products-->
+var chart = new CanvasJS.Chart("sold_repeat_trend", {
+      theme: "light2", // "light1", "light2", "dark1", "dark2"
+      animationEnabled: true,
+      zoomEnabled: true,
+      title: {
+          text: "Sold Products Trends of Repeated Products"
+      },
+    axisX: {
+          title: "Number of products"
+        },
+    axisY: {
+          title: "No. of Sold Products",
+          titleFontFamily: "comic sans ms"
+        },
+      data: [{
+          type: "area",
+          dataPoints: []
+      }]
+  });
+addDataPoints({{daraz_dict.rep_sold_trend_len}},{{daraz_dict.rep_sold_trend}});
+chart.render();
+
+<!--Sold Trends of Not Repeated Products-->
+var chart = new CanvasJS.Chart("sold_notrepeat_trend", {
+      theme: "light2", // "light1", "light2", "dark1", "dark2"
+      animationEnabled: true,
+      zoomEnabled: true,
+      title: {
+          text: "Sold Products Trends of Not Repeated Products"
+      },
+    axisX: {
+          title: "Number of products"
+        },
+    axisY: {
+          title: "No. of Sold Products",
+          titleFontFamily: "comic sans ms"
+        },
+      data: [{
+          type: "area",
+          dataPoints: []
+      }]
+  });
+addDataPoints({{daraz_dict.not_rep_sold_trend_len}},{{daraz_dict.not_rep_sold_trend}});
+chart.render();
+
+
+
+
+function addDataPoints(xvalues,yvalues) {
+      var xVal = xvalues;
+      var yVal = yvalues;
+      for(var i = 0; i < xVal.length; i++) {
+          chart.options.data[0].dataPoints.push({label: xVal[i],y: yVal[i]});
+      }
+    }
+
+
+
+}
+</script>
+
+<div class="content bg">
+    <div class="container">
+		<div class="row">
+			<div class="col s12">
+				<h1 class="black-text">Daraz Flash Sale Analysis</h1>
+			</div>
+
+		</div>
+	</div>
+
+				<!--		analysis data	-->
+<!--total sold,average sale,total sale 	-->
+	<div class="row">
+			<div class="col s12 m6 l4">
+				<div class="card-panel blue lighten-1 white-text center">
+				  <i class="material-icons medium">view_quilt</i>
+				  <h5>Total Sold Products</h5>
+				  <h3 class="count">{{daraz_dict.total_item_sold}}</h3>
+				  <div class="progress grey lighten-1">
+					  <div class="determinate white" style="width: 30%;"></div>
+				  </div>
+				</div>
+		  </div>
+
+		  <div class="col s12 m6 l4">
+			<div class="card-panel center">
+			  <i class="material-icons medium">trending_up monetization_on</i>
+			  <h5>Total Revenue</h5>
+			  <h3 class="count">{{daraz_dict.total_revenue}}</h3>
+			  <div class="progress grey lighten-1">
+				<div class="determinate blue lighten-1" style="width: 60%;"></div>
+			  </div>
+			</div>
+		  </div>
+
+		  <div class="col s12 m6 l4">
+			<div class="card-panel blue lighten-1 white-text center">
+			  <i class="material-icons medium">trending_down monetization_on</i>
+			  <h5>Average Sale</h5>
+			  <h3 class="count">{{daraz_dict.avg_sale}}</h3>
+			  <div class="progress grey lighten-1">
+				<div class="determinate white" style="width: 30%;"></div>
+			  </div>
+			</div>
+		  </div>
+		</div>
+		<br>
+<!-- Daily Sales Line chart  -->
+	<div class="row">
+		<div class="col s12">
+			<h3 class="black-text">Most & Least Sales Day</h3>
+		</div>
+
+		<div class="col s12 m12 l12">
+			<div id="Overallsale" style="height: 300px; width: 100%;"></div>
+			<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+		</div>
+
+	</div>
+	<br>
+
+<!-- Most & least sales day	-->
+	<div class="row">
+			<div class="col s12">
+				<h3 class="black-text">Most & Least Sales Day</h3>
+			</div>
+
+		<div class="col s12 m3 l3">
+			<h6 class="black-text">Most Sales Day</h6>
+		<h5 class="green-text">
+			{{daraz_dict.most_sales_day1}}
+		</h5>
+		<h5 class="green-text">
+			Rs. {{daraz_dict.most_sales_revenue1}}
+		</h5>
+			<br>
+			<h6 class="black-text">Least Sales Day</h6>
+		<h5>
+			{{daraz_dict.least_sales_day2}}
+		</h5>
+		<h5>
+			Rs. {{daraz_dict.least_sales_revenue2}}
+		</h5>
+		</div>
+
+		<div class="col s12 m9 l9">
+			<div id="chartContainer" style="height: 300px; width: 100%;"></div>
+			<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+		</div>
+
+	</div>
+	<br>
+
+<!-- Most & Least in term of sold item	-->
+	<div class="row">
+			<div class="col s12">
+				<h3 class="black-text">Most & Least Sold Item</h3>
+			</div>
+		<div class="col s12 m12 s12">
+			<div class="card">
+				<div class="card-content">
+					<table class="striped black-text">
+						<tr>
+							<th>Date</th>
+							<th>Product Name</th>
+							<th>Sold Product</th>
+							<th>Revenue</th>
+						</tr>
+						<tr>
+							<td>{{daraz_dict.most_sold_item_date3}}</td>
+							<td>{{daraz_dict.most_sold_item_name3}}</td>
+							<td>{{daraz_dict.most_sold_item_amount3}}</td>
+							<td>{{daraz_dict.most_sold_item_revenue3}}</td>
+						</tr>
+						<tr>
+							<td>{{daraz_dict.least_sold_item_date4}}</td>
+							<td>{{daraz_dict.least_sold_item_name4}}</td>
+							<td>{{daraz_dict.least_sold_item_amount4}}</td>
+							<td>{{daraz_dict.least_sold_item_revenue4}}</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+
+		<div class="col s12 m9 l9">
+			<div id="chartContainer1" style="height: 300px; width: 100%;padding:20px 100px;"></div>
+			<script src="static/js/canvasjs.min.js"></script>
+		</div>
+	</div>
+	<br>
+
+<!-- Top 15 Most sold Products	-->
+	<div class="row">
+		<div class="col s12">
+			<h3 class="black-text">Top15 Sold Products</h3>
+		</div>
+		<div class="col s12 m12 l12">
+			<div id="chartContainer2" style="height: 500px; width: 100%;"></div>
+			<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+		</div>
+		<div class="col s12">
+		<a href="{% url 'all-item-detail' %}"> >>  All item Detail</a>
+		</div>
+
+	</div>
+	<br>
+
+<!-- Top 15 Most revenue collecting Products	-->
+	<div class="row">
+		<div class="col s12">
+			<h3 class="black-text">Top15 Revenue Collecting Products</h3>
+		</div>
+		<div class="col s12 m12 l12">
+			<div id="chartContainer3" style="height: 500px; width: 100%;"></div>
+			<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+		</div>
+
+
+	</div>
+	<br>
+
+
+<!-- Most & Least products in term of sales Revenue	-->
+	<div class="row">
+		<div class="col s12">
+			<h3 class="black-text">Top Revenue Collecting Product</h3>
+		</div>
+		<div class="col s12 m6 l6">
+			<h6 class="black-text">Top Revenue Collecting Product</h6>
+		<h5 class="green-text">
+			{{daraz_dict.most_revenue_product_name5}}
+		</h5>
+		<h5 class="green-text">
+			Rs. {{daraz_dict.most_revenue_product_sale5}}
+		</h5>
+		</div>
+		<div class="col s12">
+		<a href="{% url 'all-item-detail-revenue' %}"> >>  All item Detail</a>
+		</div>
+
+	</div>
+	<br>
+
+<!-- Sold Vs Not Sold Products Percentage	-->
+	<div class="row">
+		<div class="col s12">
+			<h3 class="black-text">Sold Vs Zero Sold Products</h3>
+		</div>
+		<div class="col s12 m12 l12">
+			<div id="Sold_vs_notsold" style="height: 500px; width: 100%;"></div>
+			<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+		</div>
+
+	</div>
+	<br>
+
+<!-- Data Distribution & their Share	-->
+	<div class="row">
+		<div class="col s12">
+			<h3 class="black-text">Products Market Share in Daraz</h3>
+		</div>
+		<div class="col s12 m6 l6">
+			<div class="card">
+				<div class="card-content center-align">
+					<h3>
+					{{daraz_dict.percentail_revenue_share1}}%
+					</h3>
+					<p class="black-text">
+						<b>{{daraz_dict.percentail_percent1}}%</b> products get <b>{{daraz_dict.percentail_revenue_share1}}%</b> Revenue in Daraz Flash Sale.
+					</p>
+				</div>
+			</div>
+		</div>
+		<div class="col s12 m6 l6">
+			<div class="card">
+				<div class="card-content center-align">
+					<h3 class="green-text">
+					{{daraz_dict.percentail_revenue_share2}}%
+					</h3>
+					<p class="black-text">
+						<b>{{daraz_dict.percentail_percent2}}%</b> products get <b>{{daraz_dict.percentail_revenue_share2}}%</b> Revenue in Daraz Flash Sale.
+					</p>
+				</div>
+			</div>
+		</div>
+		<br>
+		<div class="col s12 m12 l12">
+			<div id="marketshare" style="height: 370px; width: 100%;">
+			<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+		</div>
+		<div class="col s12">
+		<a href="{% url 'all-item-market-revenue' %}"> >>  Products Detail</a>
+		</div>
+		<br>
+		<div class="col s12 black-text">
+			<h3>5% Products That have Highest Revenue Share</h3>
+			<p>5% products List with their Repetition, Net Revenue & Net Sold amount. </p>
+		</div>
+		<div class="col s12 m12 l12">
+
+			<div id="box" class="card">
+				<div id="demo" class="card-content">
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>
+	<br>
+
+<!-- Top15 Most Repeated Products-->
+	<div class="row">
+		<div class="col s12 black-text">
+			<h3>Top15 Most Repeated Products</h3>
+		</div>
+
+		<div class="row">
+		<div class="col s12 m12 l12">
+				<div id="top15_repeat" style="height: 500px; width: 100%;"></div>
+				<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+		</div>
+		</div>
+
+		<div class="row">
+			<div class="col s12 m6 l6">
+				<div id="top15_repeatsold" style="height: 500px; width: 100%;"></div>
+				<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
+				<a href="{% url 'repeat-product-sold' %}"> >>  More Detail</a>
+			</div>
+			<div class="col s12 m6 l6">
+				<div id="top15_repeatsales" style="height: 500px; width: 100%;"></div>
+				<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+				<a href="{% url 'repeat-product-sales' %}"> >>  More Detail</a>
+			</div>
+		</div>
+	</div>
+	<br>
+
+<!-- Sales Trend of Repeat and Not Repeat Products	-->
+
+	<div class="row">
+		<div class="col s12 black-text">
+			<h3>Sales Trends of Repeated Products</h3>
+		</div>
+
+		<div class="col s12 m3 l3">
+			<div class="card">
+				<div class="card-content blue lighten-1 white-text center">
+					<h6 ><b>Net Sales</b></h6>
+					<h5 >
+					Rs. {{daraz_dict.rep_net_sale}}
+					</h5>
+				</div>
+			</div>
+
+			<div class="card">
+				<div class="card-content green lighten-1 white-text center">
+					<h6 ><b>Max. Sales</b></h6>
+						<h5 >
+						Rs. {{daraz_dict.rep_max_sale}}
+						</h5>
+				</div>
+			</div>
+
+			<div class="card">
+				<div class="card-content orange lighten-2 white-text center">
+					<h6><b>Average Sales</b></h6>
+					<h5>
+					Rs. {{daraz_dict.rep_avg_sale}}
+					</h5>
+				</div>
+			</div>
+		</div>
+        <div class="col s12 m9 l9">
+            <div id="sales_repeat_trend" style="height: 400px; width: 100%;"></div>
+			<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+        </div>
+	</div>
+	<br>
+
+<!-- Sold Trend of Repeat and Not Repeat Products	-->
+
+	<div class="row">
+
+
+		<div class="col s12 m9 l9">
+            <div id="sales_notrepeat_trend" style="height: 400px; width: 100%;"></div>
+			<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+        </div>
+
+				<div class="col s12 m3 l3">
+			<div class="card">
+				<div class="card-content blue lighten-1 white-text center">
+					<h6 ><b>Net Sales</b></h6>
+					<h5 >
+					Rs. {{daraz_dict.not_rep_net_sale}}
+					</h5>
+				</div>
+			</div>
+
+			<div class="card">
+				<div class="card-content green lighten-1 white-text center">
+					<h6 ><b>Max. Sales</b></h6>
+						<h5 >
+						Rs. {{daraz_dict.not_rep_max_sale}}
+						</h5>
+				</div>
+			</div>
+
+			<div class="card">
+				<div class="card-content orange lighten-2 white-text center">
+					<h6><b>Average Sales</b></h6>
+					<h5>
+					Rs. {{daraz_dict.not_rep_avg_sale}}
+					</h5>
+				</div>
+			</div>
+		</div>
+	</div>
+	<br>
+
+
+<!-- Sold Products Trend of Repeat and Not Repeat Products	-->
+
+	<div class="row">
+		<div class="col s12 black-text">
+			<h3>Sold Products Trends of Repeated Products</h3>
+		</div>
+		<div class="col s12 m3 m3">
+		<div class="card">
+				<div class="card-content blue lighten-1 white-text center">
+					<h6 ><b>Net Sold</b></h6>
+					<h5 >
+					Rs. {{daraz_dict.rep_net_sold}}
+					</h5>
+				</div>
+			</div>
+
+			<div class="card">
+				<div class="card-content green lighten-1 white-text center">
+					<h6 ><b>Max. Sold</b></h6>
+						<h5 >
+						Rs. {{daraz_dict.rep_max_sold}}
+						</h5>
+				</div>
+			</div>
+
+			<div class="card">
+				<div class="card-content orange lighten-2 white-text center">
+					<h6><b>Average Sold</b></h6>
+					<h5>
+					Rs. {{daraz_dict.rep_avg_sold}}
+					</h5>
+				</div>
+			</div>
+		</div>
+        <div class="col s12 m9 l9">
+            <div id="sold_repeat_trend" style="height: 400px; width: 100%;"></div>
+			<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+        </div>
+	</div>
+	<br>
+	<div class="row">
+
+
+		<div class="col s12 m9 l9">
+            <div id="sold_notrepeat_trend" style="height: 400px; width: 100%;"></div>
+			<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+        </div>
+
+		<div class="col s12 m3 m3">
+		<div class="card">
+				<div class="card-content blue lighten-1 white-text center">
+					<h6 ><b>Net Sold</b></h6>
+					<h5 >
+					Rs. {{daraz_dict.not_rep_net_sold}}
+					</h5>
+				</div>
+			</div>
+
+			<div class="card">
+				<div class="card-content green lighten-1 white-text center">
+					<h6 ><b>Max. Sold</b></h6>
+						<h5 >
+						Rs. {{daraz_dict.not_rep_max_sold}}
+						</h5>
+				</div>
+			</div>
+
+			<div class="card">
+				<div class="card-content orange lighten-2 white-text center">
+					<h6><b>Average Sold</b></h6>
+					<h5>
+					Rs. {{daraz_dict.not_rep_avg_sold}}
+					</h5>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+</div>
+
+
+<script>
+
+
+let all_product_detail_sales={{daraz_dict.mrk5_sales}};
+let all_product_detail_title={{daraz_dict.mrk5_name|safe}};
+let all_product_detail_repeat={{daraz_dict.mrk5_repeat}}
+let all_product_detail_amount={{daraz_dict.mrk5_sold}}
+
+let s1=all_product_detail_sales;
+let t1=all_product_detail_title;
+let d1=all_product_detail_repeat;
+let m1=all_product_detail_amount;
+
+var nrow=s1.length;
+var txt='<table class="striped black-text"><tr><th>Product Name</th><th>Repeat</th><th>Total Sold</th><th>Net Revenue</th></tr>';
+for(let i=0;i<s1.length;i++)
+{
+txt+='<tr><td>'+t1[i]+'</td><td>'+d1[i]+'</td><td>'+m1[i]+'</td><td>'+s1[i]+'</td></tr>';
+}
+txt=txt+'</table>';
+document.getElementById('demo').innerHTML =txt;
+document.getElementById('total_row').innerHTML =nrow;
+</script>
+  {% endblock %}

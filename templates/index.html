@@ -1,0 +1,362 @@
+{% load static %} {% csrf_token %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <!--Import Google Icon Font-->
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <script
+      defer
+      src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"
+    ></script>
+    <!--Import materialize.css-->
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href="{% static 'css/materialize.min.css' %}"
+      media="screen,projection"
+    />
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href="{% static 'css/styles.css' %}"
+    />
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href="{% static 'css/preload.css' %}"
+    />
+
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ECMRT</title>
+  </head>
+
+  <body>
+    <!-- Header -->
+    <header class="main_header">
+      <nav class="transparent">
+        <div class="container">
+          <div class="nav-wrapper">
+            <a href="#" class="brand-logo">
+              <img
+                src="http://drive.google.com/uc?export=view&id=1jTq2lG5lj9VGefd2Uz2XlmzHeS_gefIF"
+                height="120px"
+                style="margin-top: -20px"
+                alt="ECMRT"
+              />
+            </a>
+            <a href="#" data-activates="mobile-nav" class="button-collapse">
+              <i class="fa fa-bars"></i>
+            </a>
+            <ul class="right hide-on-med-and-down">
+              <li>
+                <a class="active-link" href="{% url 'index' %}">Home</a>
+              </li>
+              <li>
+                <a href="{% url 'solutions' %}">Solutions</a>
+              </li>
+              <li>
+                <a href="{% url 'signup' %}">Sign Up</a>
+              </li>
+              <li>
+                <a href="#login-modal" class="btn purple modal-trigger"
+                  >Login</a
+                >
+              </li>
+              <li style="margin-top: 25px">
+                <a href="https://facebook.com">
+                  <i class="fab fa-facebook"></i>
+                </a>
+              </li>
+              <li style="margin-top: 25px">
+                <a href="https://twitter.com">
+                  <i class="fab fa-twitter"></i>
+                </a>
+              </li>
+              <li style="margin-top: 25px">
+                <a href="https://instagram.com">
+                  <i class="fab fa-instagram"></i>
+                </a>
+              </li>
+            </ul>
+            <ul class="side-nav" id="mobile-nav">
+              <h4 class="purple-text text-darken-4 center">ECMRT</h4>
+              <li>
+                <div class="divider"></div>
+              </li>
+              <li>
+                <a href="index.html">
+                  <i class="fa fa-home grey-text text-darken-4"></i> Home</a
+                >
+              </li>
+              <li>
+                <a href="solutions">
+                  <i class="fa fa-cog grey-text text-darken-4"></i> Solutions</a
+                >
+              </li>
+              <li>
+                <a href="signup.html">
+                  <i class="fa fa-users grey-text text-darken-4"></i> Sign Up</a
+                >
+              </li>
+              <li>
+                <div class="divider"></div>
+              </li>
+              <li>
+                <a href="#login-modal" class="btn purple modal-trigger"
+                  >Login</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      <!-- Showcase -->
+      <div class="showcase container">
+        <div class="row">
+          <div class="col s12 m10 offset-m1 center">
+            <h5>Welcome To E-commerce Market Research Tool</h5>
+            <h1>Build For The Future</h1>
+            <p>Grow Fast in Your Business</p>
+            <br />
+            <br />
+
+            <div class="nav-wrapper">
+              <form action="keyword_search">
+                {% csrf_token %}
+                <div
+                  class="input-field"
+                  style="
+                    height: 40px;
+                    border-radius: 10px;
+                    background-color: white;
+                  "
+                >
+                  <input id="search" type="search" name="search" required />
+                  <label class="label-icon" for="search"
+                    ><i class="material-icons">search</i></label
+                  >
+                  <i class="material-icons" style="padding-top: 5px">close</i>
+                </div>
+              </form>
+            </div>
+            <br />
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="preloader-wrapper big active loader">
+      <div class="spinner-layer spinner-blue">
+        <div class="circle-clipper left">
+          <div class="circle"></div>
+        </div>
+        <div class="gap-patch">
+          <div class="circle"></div>
+        </div>
+        <div class="circle-clipper right">
+          <div class="circle"></div>
+        </div>
+      </div>
+
+      <div class="spinner-layer spinner-red">
+        <div class="circle-clipper left">
+          <div class="circle"></div>
+        </div>
+        <div class="gap-patch">
+          <div class="circle"></div>
+        </div>
+        <div class="circle-clipper right">
+          <div class="circle"></div>
+        </div>
+      </div>
+
+      <div class="spinner-layer spinner-yellow">
+        <div class="circle-clipper left">
+          <div class="circle"></div>
+        </div>
+        <div class="gap-patch">
+          <div class="circle"></div>
+        </div>
+        <div class="circle-clipper right">
+          <div class="circle"></div>
+        </div>
+      </div>
+
+      <div class="spinner-layer spinner-green">
+        <div class="circle-clipper left">
+          <div class="circle"></div>
+        </div>
+        <div class="gap-patch">
+          <div class="circle"></div>
+        </div>
+        <div class="circle-clipper right">
+          <div class="circle"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section: Icon Boxes -->
+    <section class="section section-icons center">
+      <div class="container">
+        <div class="row">
+          <div class="col s12 m4">
+            <div class="card-panel">
+              <i class="fa fa-user fa-3x deep-purple-text text-darken-2"></i>
+              <h5 class="grey-text text-darken-4">Free Account</h5>
+              <p>
+                Search Your Product With A Key Word In Different Market Places
+                And Get Results.
+              </p>
+            </div>
+          </div>
+          <div class="col s12 m4">
+            <div class="card-panel">
+              <i
+                class="fa fa-database fa-3x deep-purple-text text-darken-2"
+              ></i>
+              <h5 class="grey-text text-darken-4">Data Analysis</h5>
+              <p>
+                Perform Analysis For Your Product, For Future Predication To
+                Grow Fast In Market.
+              </p>
+            </div>
+          </div>
+          <div class="col s12 m4">
+            <div class="card-panel">
+              <i class="fa fa-bolt fa-3x deep-purple-text text-darken-2"></i>
+              <h5 class="grey-text text-darken-4">Fast Service</h5>
+              <p>
+                ECMRT Facilitate You in Teams of Product Predication, Target
+                Audience, and Sale Analysis.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Section: About -->
+    <section class="section section-about grey lighten-4">
+      <div class="container">
+        <div class="row">
+          <div class="col s12 m6">
+            <h3>
+              <span class="deep-purple-text text-darken-1">About</span> Us
+            </h3>
+            <p class="flow-text">
+              ECMRT provides data analysis of different ecommerce stores using
+              Advance BI(Business Intelligence) techniques.
+            </p>
+          </div>
+          <div class="col s12 m6">
+            <img
+              src="{% static 'img/tech.png' %}"
+              alt=""
+              class="circle responsive-img"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="page-footer #9c27b0 purple">
+      <div class="container">
+        <div class="row">
+          <div class="col l6 s12">
+            <h5 class="white-text">
+              <img
+                src="http://drive.google.com/uc?export=view&id=1jTq2lG5lj9VGefd2Uz2XlmzHeS_gefIF"
+                height="150px"
+                alt="ECMRT"
+              />
+            </h5>
+            <p class="grey-text text-lighten-4" style="padding-top: -100px">
+              ECMRT provides data analysis of different ecommerce stores using
+              Advance BI(Business Intelligence) techniques.
+            </p>
+          </div>
+          <div class="col l4 offset-l2 s12">
+            <h5 class="white-text">ECMRT</h5>
+            <ul>
+              <li>
+                <a class="grey-text text-lighten-3" href="index.html">Home</a>
+              </li>
+              <li>
+                <a class="grey-text text-lighten-3" href="solutions.html"
+                  >Solutions</a
+                >
+              </li>
+              <li>
+                <a class="grey-text text-lighten-3" href="signup.html"
+                  >Signup</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="footer-copyright #6a1b9a purple darken-3">
+        <div class="container">
+          E-commerce Market Research Tool &copy; 2022
+          <a class="grey-text text-lighten-4 right" href="#!"
+            >Terms & Conditions</a
+          >
+        </div>
+      </div>
+    </footer>
+
+    <!-- Login Modal -->
+    <div id="login-modal" class="modal">
+      <div class="modal-content">
+        <h4>Account Login</h4>
+        <p>Login to access your account dashboard</p>
+        <form action="login" method="POST">
+          {% csrf_token %}
+          <div class="input-field">
+            <input name="username1" type="text" id="username1" />
+            <label for="username1">Username</label>
+          </div>
+          <div class="input-field">
+            <input name="password1" type="password" id="password1" />
+            <label for="password1">Password</label>
+          </div>
+
+          <i class="fa fa-lock"></i>
+          <input
+            class="modal-action modal-close btn purple"
+            type="submit"
+            value="login"
+          />
+        </form>
+      </div>
+      <!--    <div class="modal-footer">-->
+      <!--      <a href="#!" class="modal-action modal-close btn grey">-->
+      <!--        <i class="fa fa-sync"></i> Reset Password</a>-->
+      <!--      <a href="#!" class="modal-action modal-close btn purple">-->
+      <!--        <i class="fa fa-lock"></i> Login</a>-->
+      <!--    </div>-->
+    </div>
+
+    <!--Import jQuery before materialize.js-->
+    <script
+      type="text/javascript"
+      src="https://code.jquery.com/jquery-3.2.1.min.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="{% static 'js/materialize.min.js' %}"
+    ></script>
+    <script>
+      $(".loader").fadeOut();
+      $(document).ready(function () {
+        $(".carousel.carousel-slider").carousel({ fullWidth: true });
+        $(".button-collapse").sideNav();
+        $(".modal").modal();
+      });
+    </script>
+  </body>
+</html>

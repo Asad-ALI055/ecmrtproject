@@ -1,0 +1,87 @@
+{% extends 'userapp/dashboard_headerfooter.html' %} {% load static %}
+<!--Block content goes below-->
+
+{% block content %}
+
+<div class="content bg">
+  <div class="container">
+    <div class="row">
+      <div class="col s12">
+        <h1 class="black-text">Platform Recommendation</h1>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <form
+      action="platform-recommend"
+      class="section section-search #ef5350 red lighten-1 white-text center"
+    >
+      {% csrf_token %}
+      <div class="container">
+        <div class="row">
+          <div class="col s12">
+            <h3 class="left-align">Search Audience</h3>
+            <div class="input-field">
+              <input
+                class="white dark-text autocomplete"
+                style="border-radius: 25px; padding: 2px; padding-left: 10px"
+                placeholder="Search Keyword..."
+                type="text"
+                name="platform"
+                id="autocomplete-input"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div class="row">
+    <div class="col s12 m12 l12">
+      <div class="center-align">
+        {% for message in messages %}
+        <h3 style="color: red">{{message}}</h3>
+        {% endfor %}
+      </div>
+      <span>Total Record :</span>
+      <span id="total_row"></span>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col s12 m12 l12">
+      <div class="card">
+        <div id="demo" class="card-content"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+
+
+
+  let all_product_detail_page={{group_dict.page_url|safe}}
+  let all_product_detail_img={{group_dict.img_link|safe}}
+
+  let all_product_detail_aduiance={{group_dict.aduiance|safe}};
+  let all_product_detail_title={{group_dict.page_title|safe}};
+
+  let s1=all_product_detail_aduiance;
+  let t1=all_product_detail_title;
+  let img1=all_product_detail_img;
+  let p1=all_product_detail_page;
+
+  var nrow=s1.length;
+  var txt='<table class="striped black-text"><tr><th>Image</th><th>Page Title</th><th>Page Link</th><th>Aduiance</th></tr>';
+  for(let i=0;i<s1.length;i++)
+  {
+  txt+='<tr><td><img src="'+img1[i]+'"></td><td>'+t1[i]+'</td><td>'+p1[i]+'</td><td>'+s1[i]+'</td></tr>';
+  }
+  txt=txt+'</table>';
+  document.getElementById('demo').innerHTML =txt;
+  document.getElementById('total_row').innerHTML =nrow;
+</script>
+
+{% endblock %}

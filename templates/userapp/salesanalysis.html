@@ -1,0 +1,306 @@
+{% extends 'userapp/dashboard_headerfooter.html' %}
+{% load static %}
+<!--Block content goes below-->
+
+
+  {% block content %}
+<!--JAVA SCRIPT-->
+
+<script>
+window.onload = function () {
+
+<!-- chart for month vs sales -->
+var chart = new CanvasJS.Chart("chartContainer", {
+	animationEnabled: true,
+	theme: "light2", // "light1", "light2", "dark1", "dark2"
+	title: {
+		text: "Best Sales Month"
+	},
+	axisY: {
+		title: "Sales in ($)",
+		suffix: "$"
+	},
+	axisX: {
+		title: "Month"
+	},
+	data: [{
+		type: "column",
+		yValueFormatString: "#,##0.0#\"$\"",
+		dataPoints: []
+	}]
+});
+
+dateaddDataPoints({{dict.month1}},{{dict.sales1}});
+chart.render();
+
+<!--chart for city vs sales-->
+var chart = new CanvasJS.Chart("chartContainer1", {
+	animationEnabled: true,
+
+	title:{
+		text:"Best Selling Cities"
+	},
+	axisX:{
+		interval: 1
+	},
+	axisY2:{
+		interlacedColor: "rgba(1,77,101,.2)",
+		gridColor: "rgba(1,77,101,.1)",
+		title: "Sales Amount ($)"
+	},
+	data: [{
+		type: "bar",
+		name: "companies",
+		axisYType: "secondary",
+		color: "#014D65",
+		dataPoints: []
+	}]
+});
+let city={{city2|safe}}
+addDataPoints(city,{{dict.sales2}});
+chart.render();
+
+
+<!--best time for sales-->
+
+var chart = new CanvasJS.Chart("chartContainer2", {
+	animationEnabled: true,
+	theme: "light2",
+	title:{
+		text: "Best Selling Hours"
+	},
+	axisY: {
+		title: "Number of Transaction"
+	},
+	axisX: {
+		title: "Time"
+	},
+	data: [{
+		type: "line",
+      	indexLabelFontSize: 16,
+		dataPoints: []
+	}]
+});
+addDataPoints({{dict.hour3}},{{dict.trans3}});
+chart.render();
+
+
+<!--best products vs amount sold-->
+var chart = new CanvasJS.Chart("chartContainer3", {
+	animationEnabled: true,
+	title: {
+		text: "Best Selling Products"
+	},
+	axisX: {
+		interval: 1
+	},
+	axisY: {
+		title: "Amount Sold",
+		includeZero: true,
+
+	},
+	data: [{
+		type: "bar",
+		dataPoints: []
+	}]
+});
+let product={{product4|safe}}
+addDataPoints(product,{{dict.quantity4}});
+chart.render();
+
+
+
+
+<!-- price most sold item -->
+
+var chart = new CanvasJS.Chart("chartContainer4", {
+	animationEnabled: true,
+	theme: "light2",
+	title: {
+		text: "Which Product Most Sold "
+	},
+	axisX: {
+		title:"Products"
+	},
+	toolTip: {
+		shared: true
+	},
+	data: [
+	{
+		type: "column",
+		name: "Number of Sold Products",
+		showInLegend: true,
+		yValueFormatString: "#,##0",
+		dataPoints: []
+	}]
+});
+addDataPoints(product,{{dict.quantity4}});
+chart.render();
+
+
+
+var chart = new CanvasJS.Chart("chartContainer5", {
+	animationEnabled: true,
+	theme: "light2",
+	title: {
+		text: "Why Most Sold"
+	},
+	axisX: {
+		title:"Products"
+	},
+	axisY: {
+		prefix: "$"
+	},
+	toolTip: {
+		shared: true
+	},
+	data: [
+		{
+		type: "area",
+		name: "Product Prices",
+		markerBorderColor: "white",
+		markerBorderThickness: 2,
+		showInLegend: true,
+		yValueFormatString: "$#,##0",
+		dataPoints: []
+	}]
+});
+addDataPoints(product,{{dict.price5}});
+chart.render();
+
+
+
+
+
+
+
+
+
+function addDataPoints(xvalues,yvalues) {
+      var xVal = xvalues;
+      var yVal = yvalues;
+      for(var i = 0; i < xVal.length; i++) {
+          chart.options.data[0].dataPoints.push({label: xVal[i],y: yVal[i]});
+      }
+    }
+
+function dateaddDataPoints(xvalues,yvalues) {
+      var xVal = xvalues;
+      var yVal = yvalues;
+      for(var i = 0; i < xVal.length; i++) {
+          chart.options.data[0].dataPoints.push({x:new Date(2016,xVal[i]-1),y: yVal[i]});
+      }
+    }
+
+
+
+}
+</script>
+
+
+<div class="content bg">
+<!--  <div class="container">  -->
+<!--   OR    -->
+	<div>
+		<div class="row">
+			<div class="col s12">
+				<h1 class="black-text">Sales Analysis</h1>
+			</div>
+
+<!--		analysis data	-->
+			<div class="col s12 m6 l4">
+				<div class="card-panel blue lighten-1 white-text center">
+				  <i class="material-icons medium">view_quilt</i>
+				  <h5>Total Transactions</h5>
+				  <h3 class="count">{{dict.total_trans}}</h3>
+				  <div class="progress grey lighten-1">
+					  <div class="determinate white" style="width: 30%;"></div>
+				  </div>
+				</div>
+		  </div>
+
+		  <div class="col s12 m6 l4">
+			<div class="card-panel center">
+			  <i class="material-icons medium">trending_up monetization_on</i>
+			  <h5>Null/Faulty Transactions</h5>
+			  <h3 class="count">{{dict.empty_trans}}</h3>
+			  <div class="progress grey lighten-1">
+				<div class="determinate blue lighten-1" style="width: 60%;"></div>
+			  </div>
+			</div>
+		  </div>
+
+		  <div class="col s12 m6 l4">
+			<div class="card-panel blue lighten-1 white-text center">
+			  <i class="material-icons medium">trending_down monetization_on</i>
+			  <h5>Remaining Transactions</h5>
+			  <h3 class="count">{{dict.actual_trans}}</h3>
+			  <div class="progress grey lighten-1">
+				<div class="determinate white" style="width: 30%;"></div>
+			  </div>
+			</div>
+		  </div>
+		<br>
+		<div class="col s12">
+			<br>
+				<h2 class="black-text">Best Month For Sales</h2>
+		</div>
+		<div class="col s12 m12 l12">
+			<div id="chartContainer" style="height: 300px; width: 100%;"></div>
+			<script src="static/js/canvasjs.min.js"></script>
+		</div>
+
+		<br>
+		<div class="col s12">
+			<br>
+				<h2 class="black-text">Best Selling Cities</h2>
+		</div>
+		<div class="col s12 m12 l12">
+			<div id="chartContainer1" style="height: 400px; width: 100%;"></div>
+			<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+		</div>
+
+			<br>
+		<div class="col s12">
+			<br>
+				<h2 class="black-text">Best Time for Sales & Advertisement</h2>
+		</div>
+		<div class="col s12 m12 l12">
+			<div id="chartContainer2" style="height: 300px; width: 100%;"></div>
+			<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+		</div>
+
+		<div class="col s12">
+			<br>
+				<h2 class="black-text">Best Selling Products</h2>
+		</div>
+		<br>
+		<div class="col s12 m12 l12">
+		<div id="chartContainer3" style="height: 400px; width: 100%;"></div>
+		<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+		</div>
+
+		<br>
+		<div class="col s12">
+<br>
+				<h2 class="black-text">Which Product Most Sold & Why?</h2>
+		</div>
+		<div class="col s12 m12 l12">
+		<<div id="chartContainer4" style="height: 400px; width: 100%;"></div>
+		<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+		<<div id="chartContainer5" style="height: 400px; width: 100%;"></div>
+		<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
+<br><br>
+		</div>
+
+
+
+
+		</div>
+	</div>
+	</div>
+
+
+
+  {% endblock %}

@@ -1,0 +1,58 @@
+{% extends 'userapp/dashboard_headerfooter.html' %}
+{% load static %}
+<!--Block content goes below-->
+
+
+  {% block content %}
+
+
+<div class="content bg">
+    <div class="container">
+		<div class="row">
+			<div class="col s12 black-text">
+				<h3 class="black-text">Daraz Flash Sale Repeated Products Details</h3>
+			</div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s12 m12 l12">
+            <span>Total Record :</span>
+            <span id="total_row" ></span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s12 m12 l12">
+            <div class="card">
+				<div id="demo" class="card-content">
+				</div>
+			</div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+
+
+let all_product_detail_sales={{daraz_dict.top15_repeat_sales1}};
+let all_product_detail_title={{daraz_dict.top15_repeat_name1|safe}};
+let all_product_detail_rep={{daraz_dict.top15_repeat_rep1|safe}}
+let all_product_detail_amount={{daraz_dict.top15_repeat_sold1}}
+
+let s1=all_product_detail_sales;
+let t1=all_product_detail_title;
+let r1=all_product_detail_rep;
+let m1=all_product_detail_amount;
+
+var nrow=s1.length;
+var txt='<table class="striped black-text"><tr><th>Product Name</th><th>Repetition</th><th>Sold Products</th><th>Revenue</th></tr>';
+for(let i=0;i<s1.length;i++)
+{
+txt+='<tr><td>'+t1[i]+'</td><td>'+r1[i]+'</td><td>'+m1[i]+'</td><td>'+s1[i]+'</td></tr>';
+}
+txt=txt+'</table>';
+document.getElementById('demo').innerHTML =txt;
+document.getElementById('total_row').innerHTML =nrow;
+</script>
+
+  {% endblock %}

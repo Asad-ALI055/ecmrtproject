@@ -1,0 +1,54 @@
+{% extends 'userapp/dashboard_headerfooter.html' %}
+{% load static %}
+<!--Block content goes below-->
+  {% block content %}
+
+<div class="content bg">
+    <div class="container">
+        <div class="row">
+            <br><br>
+
+            <form action="actual-prediction">
+                <div class="row">
+                    <br><br>
+                    <br><br>
+                    <p class="black-text"><b>File Name & Path</b> </p>
+                    <input name="path_data" value="{{file_name}}" >
+                </div>
+                <br>
+                <div class="col s12 blue-text">
+                    <h4>Columns Selection For Predication</h4>
+                </div>
+
+                <div class="col s6 m6 l6">
+                    <label for="Independent_value">Independent Column</label>
+                    <input id="Independent_value" list="Independent" placeholder="select option" name="Independent_column">
+                        <datalist id="Independent">
+                          {% for i in columns%}
+                          <option value="{{i}}">
+                          {% endfor %}
+                        </datalist>
+                 </div>
+                <div class="col s6 m6 l6">
+                    <label for="target_value">Target Column</label>
+                    <input id="target_value" list="target" placeholder="select option" name="target">
+                        <datalist id="target">
+                          {% for i in columns%}
+                          <option value="{{i}}">
+                          {% endfor %}
+                        </datalist>
+                 </div>
+              <div class="col s12 right-align">
+                  <br><br><br>
+                  <br>
+                  <button type="submit" class="btn green waves-effect waves-light">Next</button>
+              </div>
+
+            </form>
+        </div>
+    </div>
+
+</div>
+
+
+  {% endblock %}

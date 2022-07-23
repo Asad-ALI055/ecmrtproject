@@ -1,0 +1,210 @@
+{% extends 'headerfooter.html' %}
+{% load static %}
+<!--Block content goes below-->
+
+
+  {% block content %}
+  <!--  Chart scriptc -->
+  <script>
+  let name_web=["ebay.com","surmawala.pk","homeappliances.pk","telemart.pk ","yayvo.com","homeshopping.pk",
+"shophive.com","alfatah.pk","salmanelectronics","flipkart.com"]
+  window.onload = function () {
+  let t1="Trends Of Products"
+  var chart = new CanvasJS.Chart("chartContainer", {
+      theme: "light2", // "light1", "light2", "dark1", "dark2"
+      animationEnabled: true,
+      zoomEnabled: true,
+      title: {
+          text: t1
+      },
+    axisX: {
+          title: "Number of products"
+        },
+    axisY: {
+          title: "Price",
+          titleFontFamily: "comic sans ms"
+        },
+      data: [{
+          type: "area",
+          dataPoints: []
+      }]
+  });
+  let length=parseInt({{len1}});
+  var value1={{list_values}};
+
+
+
+<!--  let length=parseInt(100);-->
+  alladdDataPoints(length,value1);
+  chart.render();
+
+var p_web={{p_web|safe}};
+var len_price={{len_price}};
+  <!-- 10rd chart-->
+ for (let i=1;i<{{acc_length}}+1;i++)
+{ var chart = new CanvasJS.Chart("chartContainer"+i, {
+      theme: "light2", // "light1", "light2", "dark1", "dark2"
+      animationEnabled: true,
+      zoomEnabled: true,
+      title: {
+          text: "Trends of "+p_web[i-1]
+      },
+    axisX: {
+          title: "Number of products"
+        },
+    axisY: {
+          title: "Price",
+          titleFontFamily: "comic sans ms"
+        },
+      data: [{
+          type: "area",
+          dataPoints: []
+      }]
+  });
+
+  alladdDataPoints(len_price[0][i-1],len_price[1][i-1]);
+  chart.render();
+}
+
+
+// chart of Product Amount vs website
+var chart = new CanvasJS.Chart("barchart", {
+	animationEnabled: true,
+	theme: "light2", // "light1", "light2", "dark1", "dark2"
+	title: {
+		text: "Each Web Products"
+	},
+	axisY: {
+		title: "Number of products "
+	},
+	axisX: {
+		title: "Ecommerce Stores "
+	},
+	data: [{
+		type: "column",
+		yValueFormatString: "$#,##0.00",
+		dataPoints: []
+	}]
+});
+addbarchartPoints();
+chart.render();
+
+function addbarchartPoints() {
+
+      for(var i = 0; i <{{acc_length}} ; i++) {
+          xVal = p_web[i];
+          yVal = len_price[0][i];
+          chart.options.data[0].dataPoints.push({label: xVal,y: yVal});
+
+      }
+      }
+
+
+
+
+
+
+
+// function for product amount vs price for each website
+function alladdDataPoints(noOfDps,valuespoint) {
+      var xVal = chart.options.data[0].dataPoints.length + 1;
+      for(var i = 0; i < noOfDps; i++) {
+          yVal = valuespoint[i];
+          chart.options.data[0].dataPoints.push({x: xVal,y: yVal});
+          xVal=xVal+1;
+      }
+      }
+
+
+  }
+
+
+
+
+
+
+
+
+
+</script>
+
+
+<div class="showcase container">
+      <div class="row">
+        <div class="col s12 m10 offset-m1 center">
+          <h5>Welcome To E-commerce Market Research Tool</h5>
+          <h1>{{search_pro_name}} Product Trends</h1>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+<!-- After Header-->
+<br>
+<br>
+
+  <div class="container">
+    <div id="chartContainer" style="height: 300px; width: 100%;"></div>
+<script src="{% static 'js/canvasjs.min.js' %}"></script>
+  </div>
+<br>
+
+<div class="container">
+<div id="barchart" style="height: 300px; width: 100%;"></div>
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+</div>
+<br>
+<br>
+
+
+<div>
+        <script type="text/javascript" src="https://ssl.gstatic.com/trends_nrtr/2578_RC01/embed_loader.js"></script> <script type="text/javascript"> trends.embed.renderExploreWidget("TIMESERIES", {"comparisonItem":[{"keyword":"{{search_pro_name}}","geo":"","time":"today 1-m"}],"category":0,"property":""}, {"exploreQuery":"date=today%201-m&q={{search_pro_name}}","guestPath":"https://trends.google.com:443/trends/embed/"}); </script>
+</div>
+<!--  code charts of each website trend -->
+<p id="demo"></p>
+
+
+<br>
+
+
+<script>
+    var txt = "";
+let web_name={{p_web|safe}};
+for (let x=0;x<{{acc_length}};x++) {
+let k=x+1;
+    if (x%2==0)
+  {
+  txt +='<div class="row">'+
+    '<div class="col s12 m6">  <div class="card"> <div class="card-image"> <div id="chartContainer'+k+'" style="height: 300px; width: 100%;"></div>'+
+    '<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></'+
+    'script> <br>'+
+    '<span class="card-title">web_name[x]</span> </div> <div class="card-content">'+
+    '<p>This is Analysis of '+web_name[x] +' website. In which it show product amount vs product prices Analysis of the this ecommerce store. For more info. follow link.</p> </div> '+
+    '<form action="eachtrend" id="systemform">{% csrf_token %}<div class="card-action">  <button href="#" class="btn-flat" style="color:#ffffff; background-color:#ff6868" type="submit" name="website1"  value='+web_name[x]+',{{search_pro_name}}  form="systemform">More Info.</button>  </div></form> </div> </div>';
+  }
+  if(x%2==1)
+  {
+    txt += '<div class="col s12 m6">  <div class="card"> <div class="card-image"> <div id="chartContainer'+k+'" style="height: 300px; width: 100%;"></div>'+
+    '<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></'+
+    'script> <br>'+
+    '<span class="card-title">'+web_name[x]+'</span> </div> <div class="card-content">'+
+ '<p>This is Analysis of '+web_name[x]+' website. In which it show product amount vs product prices Analysis of the this ecommerce store. For more info. follow link.</p> </div> '+
+    '<form action="eachtrend" id="systemform">{% csrf_token %}<div class="card-action">  <button href="#" class="btn-flat" style="color:#ffffff; background-color:#ff6868" type="submit" name="website1"  value='+web_name[x]+',{{search_pro_name}}  form="systemform">More Info.</button> </div></form> </div> </div></div>';
+}
+
+
+}
+if ({{acc_length}}%2==1)
+ txt += '</div>';
+document.getElementById("demo").innerHTML = txt;
+
+</script>
+
+<div class="row">
+    <script type="text/javascript" src="https://ssl.gstatic.com/trends_nrtr/2578_RC01/embed_loader.js"></script> <script type="text/javascript"> trends.embed.renderExploreWidget("GEO_MAP", {"comparisonItem":[{"keyword":"{{search_pro_name}}","geo":"","time":"today 1-m"}],"category":0,"property":""}, {"exploreQuery":"date=today%201-m&q={{search_pro_name}}","guestPath":"https://trends.google.com:443/trends/embed/"}); </script>
+</div>
+
+<br>
+
+  {% endblock %}
