@@ -37,12 +37,17 @@
         <div class="container">
           <div class="nav-wrapper">
             <a href="#" class="brand-logo">
-              <img
-                src="http://drive.google.com/uc?export=view&id=1jTq2lG5lj9VGefd2Uz2XlmzHeS_gefIF"
-                height="120px"
-                style="margin-top: -20px"
+              <div style="display: flex; justify-content:center; align-items:center;">
+                <img
+                src="{% static 'img/ecmrt1.png' %}"
+                height="60px"
+                style="margin-top: 0px; border-radius:20px;"
+                
                 alt="ECMRT"
               />
+              <h3 style="text-transform:uppercase; font-size:1.45rem; margin-left:10px; font-weight:bold">PHT
+              </h3>
+              </div>
             </a>
             <a href="#" data-activates="mobile-nav" class="button-collapse">
               <i class="fa fa-bars"></i>
@@ -187,9 +192,9 @@
           <div class="col l6 s12">
             <h5 class="white-text">
               <img
-                src="http://drive.google.com/uc?export=view&id=1jTq2lG5lj9VGefd2Uz2XlmzHeS_gefIF"
-                height="150px"
-                alt="ECMRT"
+              src="{% static 'img/ecmrt.png' %}"
+              height="150px"
+              alt="ECMRT"
               />
             </h5>
             <p class="grey-text text-lighten-4" style="padding-top: -100px">
@@ -201,15 +206,14 @@
             <h5 class="white-text">ECMRT</h5>
             <ul>
               <li>
-                <a class="grey-text text-lighten-3" href="index.html">Home</a>
+                <a class="grey-text text-lighten-3" href="index">Home</a>
               </li>
               <li>
-                <a class="grey-text text-lighten-3" href="solutions.html"
-                  >Solutions</a
-                >
+                <a class="grey-text text-lighten-3" href="solutions"
+                  >Solutions</a>
               </li>
               <li>
-                <a class="grey-text text-lighten-3" href="signup.html"
+                <a class="grey-text text-lighten-3" href="signup"
                   >Signup</a
                 >
               </li>
@@ -219,7 +223,7 @@
       </div>
       <div class="footer-copyright deep-purple darken-1">
         <div class="container">
-          E-commerce Market Research Tool &copy; 2022
+          E-commerce Market Research Tool &copy; 2024
           <a class="grey-text text-lighten-4 right" href="#!"
             >Terms & Conditions</a
           >
