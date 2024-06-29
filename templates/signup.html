@@ -46,14 +46,21 @@
       <nav class="transparent">
         <div class="container">
           <div class="nav-wrapper">
+            
             <a href="#" class="brand-logo">
-              <img
-                src="http://drive.google.com/uc?export=view&id=1jTq2lG5lj9VGefd2Uz2XlmzHeS_gefIF"
-                height="120px"
-                style="margin-top: -20px"
+              <div style="display: flex; justify-content:center; align-items:center;">
+                <img
+                src="{% static 'img/favicon.png' %}"
+                height="90px"
+                style="margin-top: 0px; border-radius:20px;"
+                
                 alt="ECMRT"
               />
+              <h3 style="text-transform:uppercase; font-size:1.45rem; margin-left:-20px; font-weight:bold">PHT
+              </h3>
+              </div>
             </a>
+        
             <a href="#" data-activates="mobile-nav" class="button-collapse">
               <i class="fa fa-bars"></i>
             </a>
@@ -68,7 +75,7 @@
                 <a class="active-link" href="{% url 'signup' %}">Sign Up</a>
               </li>
               <li>
-                <a href="#login-modal" class="btn purple modal-trigger"
+                <a href="/" class="btn purple modal-trigger"
                   >Login</a
                 >
               </li>
@@ -89,7 +96,7 @@
               </li>
             </ul>
             <ul class="side-nav" id="mobile-nav">
-              <h4 class="purple-text text-darken-4 center">ECMRT</h4>
+              <h4 class="purple-text text-darken-4 center">PHT</h4>
               <li>
                 <div class="divider"></div>
               </li>
@@ -122,7 +129,7 @@
       <div class="showcase container">
         <div class="row">
           <div class="col s12 m10 offset-m1 center">
-            <h5>Welcome To E-commerce Market Research Tool</h5>
+            <h5>Welcome To E-commerce Product Hunting Tool</h5>
             <h1>Create An Account</h1>
           </div>
         </div>
@@ -135,16 +142,16 @@
         <div class="row">
           <div class="col s12 m6">
             <h4>Get an account</h4>
-            <p>Get the Account of E-commerce Market Research Tool</p>
+            <p>Get the Account of E-commerce Product Hunting Tool</p>
             <h4>Use our Services</h4>
             <p>
-              ECMRT facilitate their users to grow in the Field of E-commerce By
+              PHT facilitate their users to grow in the Field of E-commerce By
               Providing its Service of Sells Prediction, Audience
               Recommendation, Sale Analysis, SEO keyword Search, Draz Flash Sale
               Analysis.
             </p>
             <h4>Analysis the products</h4>
-            <p>Users can Analysis the Product’s Success.</p>
+            <p>Users can Analysis the Products Success.</p>
           </div>
 
           <div class="col s12 m6">
@@ -227,30 +234,36 @@
         <div class="row">
           <div class="col l6 s12">
             <h5 class="white-text">
-              <img
-              src="{% static 'img/ecmrt.png' %}"
-              height="150px"
-              alt="ECMRT"
+              <div style="display: flex;  align-items:center;">
+                <img
+                src="{% static 'img/favicon.png' %}"
+                height="90px"
+                style="margin-top: 0px; border-radius:20px; tintColor:white"
+                
+                alt="ECMRT"
               />
+              <h3 style="text-transform:uppercase; font-size:1.45rem; margin-left:-20px; font-weight:bold">PHT
+              </h3>
+              </div>
             </h5>
             <p class="grey-text text-lighten-4" style="padding-top: -100px">
-              ECMRT provides data analysis of different ecommerce stores using
+              PHT provides data analysis of different ecommerce stores using
               Advance BI(Business Intelligence) techniques.
             </p>
           </div>
           <div class="col l4 offset-l2 s12">
-            <h5 class="white-text">ECMRT</h5>
+            <h5 class="white-text">PHT</h5>
             <ul>
               <li>
-                <a class="grey-text text-lighten-3" href="index">Home</a>
+                <a class="grey-text text-lighten-3" href="/">Home</a>
               </li>
               <li>
-                <a class="grey-text text-lighten-3" href="solutions.html"
+                <a class="grey-text text-lighten-3" href="solutions"
                   >Solutions</a
                 >
               </li>
               <li>
-                <a class="grey-text text-lighten-3" href="signup.html"
+                <a class="grey-text text-lighten-3" href="signup"
                   >Signup</a
                 >
               </li>
@@ -260,7 +273,7 @@
       </div>
       <div class="footer-copyright deep-purple darken-1">
         <div class="container">
-          E-commerce Market Research Tool &copy; 2024
+          E-commerce Product Hunting Tool &copy; 2024
           <a class="grey-text text-lighten-4 right" href="#!"
             >Terms & Conditions</a
           >
@@ -293,7 +306,7 @@
         >
       </div>
     </div>
-    ]
+    
 
     <!--Import jQuery before materialize.js-->
     <script
